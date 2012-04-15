@@ -77,8 +77,12 @@ int main(int argc, char *argv[])
                 perror("send() error");
             }
         }
-        
-        
+        CanMsg rcvMsg;
+        int size = recv(sockfd, &rcvMsg, sizeof(rcvMsg), MSG_DONTWAIT);
+        if(size == sizeof(rcvMsg))
+        {
+            printf("id: %4x, dlc: %i, data: %16lx\n",rcvMsg.extId, rcvMsg.dlc, *((uint64_t *)rcvMsg.data)); 
+        }
     }
 
     return 0;
