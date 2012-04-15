@@ -83,6 +83,7 @@ int main(int argc, char *argv[])
         {
             printf("stdId: 0x%.4x, extId: 0x%.8x, rtr: %i, dlc: %i, data: 0x%.16lx\n",rcvMsg.stdId, rcvMsg.extId, rcvMsg.rtr, rcvMsg.dlc, *((uint64_t *)rcvMsg.data)); 
         }
+        usleep(10);
     }
 
     return 0;
