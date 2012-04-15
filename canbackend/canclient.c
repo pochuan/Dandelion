@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
         int size = recv(sockfd, &rcvMsg, sizeof(rcvMsg), MSG_DONTWAIT);
         if(size == sizeof(rcvMsg))
         {
-            printf("id: %4x, dlc: %i, data: %16lx\n",rcvMsg.extId, rcvMsg.dlc, *((uint64_t *)rcvMsg.data)); 
+            printf("stdId: 0x%.4x, extId: 0x%.8x, rtr: %i, dlc: %i, data: 0x%.16lx\n",rcvMsg.stdId, rcvMsg.extId, rcvMsg.rtr, rcvMsg.dlc, *((uint64_t *)rcvMsg.data)); 
         }
     }
 
