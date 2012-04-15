@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
             msg.data[5] = ((uint8_t*)(&counter))[5];
             msg.data[6] = ((uint8_t*)(&counter))[6];
             msg.data[7] = ((uint8_t*)(&counter))[7];
-            
+             
             counter++;
             if(send(sockfd, &msg, sizeof(msg), 0) == -1)
             {
