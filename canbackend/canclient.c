@@ -46,14 +46,6 @@ int main(int argc, char *argv[])
        return 1;
     } 
 
-    /*while ( (n = read(sockfd, recvBuff, sizeof(recvBuff)-1)) > 0)
-    {
-        recvBuff[n] = 0;
-        if(fputs(recvBuff, stdout) == EOF)
-        {
-            printf("\n Error : Fputs error\n");
-        }
-    } */
     CanMsg msg;
     memcpy(msg.sync, "STANFORD16", 10);
     msg.stdId = 0;
