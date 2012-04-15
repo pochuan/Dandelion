@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     } 
 
     CanMsg msg;
-    memcpy(msg.sync, "STANFORD16", 10);
+    //memcpy(msg.sync, "STANFORD16", 10);
     msg.stdId = 0;
     msg.extId = 0x0FFF;
     msg.ide = 1;
