@@ -8,8 +8,45 @@
 #include <unistd.h>
 #include <errno.h>
 #include <arpa/inet.h> 
+#include <pthread.h>
 #include "can.h"
 
+void *transmitCAN(void *data)
+{
+    int sockfd = *((int*)data);
+    uint64_t counter = 0;
+    CanMsg msg;
+    msg.stdId = 0;
+    msg.extId = 0x0FFF;
+    msg.ide = 1;
+    msg.rtr = 0;
+    msg.dlc = 8;
+    while(1)
+    {
+        struct timeval tv;
+        gettimeofday(&tv,NULL);
+        uint64_t timestamp = 1000000*tv.tv_sec+tv.tv_usec;
+        if((timestamp-1000) > msg.timestamp)
+        {
+            msg.timestamp = timestamp;
+            msg.data[0] = ((uint8_t*)(&counter))[0];
+            msg.data[1] = ((uint8_t*)(&counter))[1];
+            msg.data[2] = ((uint8_t*)(&counter))[2];
+            msg.data[3] = ((uint8_t*)(&counter))[3];
+            msg.data[4] = ((uint8_t*)(&counter))[4];
+            msg.data[5] = ((uint8_t*)(&counter))[5];
+            msg.data[6] = ((uint8_t*)(&counter))[6];
+            msg.data[7] = ((uint8_t*)(&counter))[7];
+
+            counter++;
+            if(send(sockfd, &msg, sizeof(msg), 0) == -1)
+            {
+                perror("send() error");
+            }
+        }
+        usleep(1000);
+    }
+}   
 int main(int argc, char *argv[])
 {
     int sockfd = 0, n = 0;
@@ -46,45 +83,21 @@ int main(int argc, char *argv[])
        return 1;
     } 
 
-    CanMsg msg;
-    //memcpy(msg.sync, "STANFORD16", 10);
-    msg.stdId = 0;
-    msg.extId = 0x0FFF;
-    msg.ide = 1;
-    msg.rtr = 0;
-    msg.dlc = 8;
-    uint64_t counter=0;
+    pthread_t txThread;
+    if(pthread_create(&txThread, NULL, transmitCAN, &sockfd))
+        return -1;
+
     while(1)
     {
-        struct timeval tv;
-        gettimeofday(&tv,NULL);
-        uint64_t timestamp = 1000000*tv.tv_sec+tv.tv_usec;
-        if((timestamp-1000) > msg.timestamp)
-        {
-            msg.timestamp = timestamp;
-            msg.data[0] = ((uint8_t*)(&counter))[0];
-            msg.data[1] = ((uint8_t*)(&counter))[1];
-            msg.data[2] = ((uint8_t*)(&counter))[2];
-            msg.data[3] = ((uint8_t*)(&counter))[3];
-            msg.data[4] = ((uint8_t*)(&counter))[4];
-            msg.data[5] = ((uint8_t*)(&counter))[5];
-            msg.data[6] = ((uint8_t*)(&counter))[6];
-            msg.data[7] = ((uint8_t*)(&counter))[7];
-             
-            counter++;
-            if(send(sockfd, &msg, sizeof(msg), 0) == -1)
-            {
-                perror("send() error");
-            }
-        }
         CanMsg rcvMsg;
-        int size = recv(sockfd, &rcvMsg, sizeof(rcvMsg), MSG_DONTWAIT);
+        int size = recv(sockfd, &rcvMsg, sizeof(rcvMsg), 0);
         if(size == sizeof(rcvMsg))
         {
             printf("stdId: 0x%.4x, extId: 0x%.8x, rtr: %i, dlc: %i, data: 0x%.16lx\n",rcvMsg.stdId, rcvMsg.extId, rcvMsg.rtr, rcvMsg.dlc, *((uint64_t *)rcvMsg.data)); 
         }
-        //usleep(10);
     }
+
+    pthread_exit(NULL);
 
     return 0;
 }
