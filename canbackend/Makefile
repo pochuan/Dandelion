@@ -1,7 +1,7 @@
 all: server canclient
 
 canclient: canclient.o
-	gcc canclient.o -o canclient
+	gcc canclient.o -o canclient -lpthread
 
 server: server.o
 	gcc server.o -o server

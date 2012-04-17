@@ -2,7 +2,7 @@
 
 typedef struct
 {
-  uint8_t sync[10];
+ // uint8_t sync[10];
 
   uint64_t timestamp;
 
