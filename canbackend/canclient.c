@@ -45,11 +45,12 @@ void *transmitCAN(void *data)
             }
         }
         usleep(1000);
+
     }
 }   
 int main(int argc, char *argv[])
 {
-    int sockfd = 0, n = 0;
+   int sockfd = 0, n = 0;
     char recvBuff[1024];
     struct sockaddr_in serv_addr; 
 
@@ -83,14 +84,17 @@ int main(int argc, char *argv[])
        return 1;
     } 
 
+
     pthread_t txThread;
     if(pthread_create(&txThread, NULL, transmitCAN, &sockfd))
         return -1;
 
+ 
+
     while(1)
     {
         CanMsg rcvMsg;
-        int size = recv(sockfd, &rcvMsg, sizeof(rcvMsg), 0);
+        int size = recv(sockfd, &rcvMsg, sizeof(rcvMsg), 0);	
         if(size == sizeof(rcvMsg))
         {
             printf("stdId: 0x%.4x, extId: 0x%.8x, rtr: %i, dlc: %i, data: 0x%.16lx\n",rcvMsg.stdId, rcvMsg.extId, rcvMsg.rtr, rcvMsg.dlc, *((uint64_t *)rcvMsg.data)); 
