@@ -22,7 +22,7 @@ public class DeviceEntry {
 		Random gen = new Random();
 		String[] boards = {"BMS", "Driver Controls", "Light Board 1", "Light Board 2", "MPPT1", "MPPT2", "MPPT3", "MPPT4", "Suspension Travel", "Tire Pressure"};
 		DeviceEntry returnDevice = new DeviceEntry(boards[gen.nextInt(boards.length)], gen.nextInt(256));
-		for(int i = 6; i < gen.nextInt(30); i++){
+		for(int i = 0; i < gen.nextInt(30); i++){
 			returnDevice.addParameter(ParameterEntry.randomEntry());
 		}
 		return returnDevice;
