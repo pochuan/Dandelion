@@ -30,6 +30,7 @@ public class AjaxTest extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		Gson gson = new Gson();
 		String[] lolz = {"lolz", "most lolz", "most insanly lolz", "welcome to the wonderful world of web code"};
 		String str = gson.toJson(lolz);
