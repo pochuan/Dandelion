@@ -58,7 +58,8 @@
     </div>
 
     <div class="container-fluid">
-      <div class="row-fluid">
+     <div class="row-fluid">
+      <!-- <div class = "columns">-->
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
@@ -73,8 +74,12 @@
 		  <div class="well sidebar-nav">
             <ul class="nav nav-list">
               <li class="nav-header">Available Measurements </li>
-    			
-          		<input type="text" style="margin: 10 auto; width: 98%" data-provide="typeahead" data-items="8" data-source='["Alabama","Alaska","Arizona"]'>
+          		<div class = "search-list">
+          				<div class="progress progress-striped active">
+  							<div class="bar" style="width: 100%;"></div>
+						</div>
+          		</div>
+       
     			<div class="accordion" id="accordion2">
 	            	<div class = "param-list">
 		            	<div class="progress progress-striped active">
@@ -87,14 +92,17 @@
               		$(document).ready(function(){
     					   $.getJSON('FetchCatalog',function(data){
     						  	    $('.param-list').empty();
-    						  	    
+    						  	  	var search_strings = new Array();
     								$.each(data, function(i, device){
-    									
-    							   		$('.param-list').append("<div class='accordion-group'><div class='accordion-heading'><a class='accordion-toggle' data-toggle='collapse' data-parent='#accordion2' href='#" + device.name + "'><i class='icon-plus'></i>" + device.name + " ID:" + device.deviceID + "</a></div><div id='" + device.name + "' class='accordion-body collapse'><div class='accordion-inner'><div class = '" + device.name +"'></div></div></div></div>");
+    									search_strings.push("\"" + device.name + "\"");
+    									$('.param-list').append("<div class='accordion-group'><div class='accordion-heading'><a class='accordion-toggle' data-toggle='collapse' data-parent='#accordion2' href='#" + device.name + "'><i class='icon-plus'></i>" + device.name + " ID:" + device.deviceID + "</a></div><div id='" + device.name + "' class='accordion-body collapse'><div class='accordion-inner'><div class = '" + device.name +"'></div></div></div></div>");
     						     		$.each(device.parameters, function(j, message){
+    						     			search_strings.push("\"" + message.name + "\"");
     						     			$("." + (device.name)).append("<i class='icon-minus'></i>Msg Name: " + message.name + " Msg ID: " + message.messageID + " Type: " + message.type + "<br>");
     						     		});
     						     	});
+    								$('.search-list').empty();
+    								$('.search-list').append("<input type='text' style='margin: 10 auto; width: 96%' data-provide='typeahead' data-items='8' data-source='[" + search_strings.toString()+ "]'>");
     					});
    					});
   			 </script>
@@ -179,6 +187,7 @@
 		  
           </div><!--/row-->
         </div><!--/span-->
+       <!-- </div> column-->
       </div><!--/row-->
 
       <hr>
@@ -201,6 +210,8 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
     <script src="bootstrap/js/jquery.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="jquery-ui-personalized-1.6rc2.min.js"></script>
+    <script type="text/javascript" src="inettuts.js"></script>
 	
     
 
