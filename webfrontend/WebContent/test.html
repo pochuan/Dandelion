@@ -234,6 +234,7 @@ $(function () {
 
     <!-- Le styles -->
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="js/CollapsibleListsCss.css" rel="stylesheet">
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -281,98 +282,54 @@ $(function () {
     </div>
 
     <div class="container-fluid">
-      <div class="row-fluid">
+     <div class="row-fluid">
+      <!-- <div class = "columns">-->
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
               <li class="nav-header">Saved Templates</li>
               <li class="active"><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
+              <li><a href="#">Race Dashboard</a></li>
+              <li><a href="#">Array</a></li>
+              <li><a href="#">Powertrain</a></li>
+              <li><a href="#">Debug</a></li>
             </ul>
           </div><!--/.well -->
 		  <div class="well sidebar-nav">
             <ul class="nav nav-list">
               <li class="nav-header">Available Measurements </li>
-         <div class="accordion" id="accordion2">
-            <div class="accordion-group">
-              <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                  <i class="icon-plus"></i>Battery Management System
-                </a>
-              </div>
-              <div id="collapseOne" class="accordion-body collapse in">
-                <div class="accordion-inner">
-				
-                  <div class="accordion" id="accordion3">
-            <div class="accordion-group">
-              <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseOne">
-                  <i class="icon-fire"></i>Average Cell Voltage
-                </a>
-              </div>
-              <div id="collapseOne" class="accordion-body collapse in">
-                <div class="accordion-inner">
-                  3.3V
-                </div>
-              </div>
-            </div>
-            <div class="accordion-group">
-              <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseTwo">
-                  <i class="icon-fire"></i>Current
-                </a>
-              </div>
-              <div id="collapseTwo" class="accordion-body collapse">
-                <div class="accordion-inner">
-                  120A
-                </div>
-              </div>
-            </div>
-            <div class="accordion-group">
-              <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseThree">
-                  <i class="icon-fire"></i>Czonka
-                </a>
-              </div>
-              <div id="collapseThree" class="accordion-body collapse">
-                <div class="accordion-inner">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                </div>
-              </div>
-            </div>
-          </div>
-                </div>
-              </div>
-            </div>
-            <div class="accordion-group">
-              <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-                  <i class="icon-plus"></i>Tire Pressure
-                </a>
-              </div>
-              <div id="collapseTwo" class="accordion-body collapse">	
-                <div class="accordion-inner">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                </div>
-              </div>
-            </div>
-            <div class="accordion-group">
-              <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
-                  <i class="icon-plus"></i>Driver Controls
-                </a>
-              </div>
-              <div id="collapseThree" class="accordion-body collapse">
-                <div class="accordion-inner">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                </div>
-              </div>
-            </div>
-          </div>
-         
-		  
+          		<div class = "search-list">
+          				<div class="progress progress-striped active">
+  							<div class="bar" style="width: 100%;"></div>
+						</div>
+          		</div>
+       
+    			<div class="accordion" id="accordion2">
+	            	<div class = "param-list">
+		            	<div class="progress progress-striped active">
+  							<div class="bar" style="width: 100%;"></div>
+						</div>
+	            	</div>
+				</div>
+    		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    		<script>
+              		$(document).ready(function(){
+    					   $.getJSON('FetchCatalog',function(data){
+    						  	    $('.param-list').empty();
+    						  	  	var search_strings = new Array();
+    								$.each(data, function(i, device){
+    									search_strings.push("\"" + device.name + "\"");
+    									$('.param-list').append("<div class='accordion-group'><div class='accordion-heading'><a class='accordion-toggle' data-toggle='collapse' data-parent='#accordion2' href='#" + device.name + "'><i class='icon-plus'></i>" + device.name + " ID:" + device.deviceID + "</a></div><div id='" + device.name + "' class='accordion-body collapse'><div class='accordion-inner'><div class = '" + device.name +"'></div></div></div></div>");
+    						     		$.each(device.parameters, function(j, message){
+    						     			search_strings.push("\"" + message.name + "\"");
+    						     			$("." + (device.name)).append("<i class='icon-minus'></i>Msg Name: " + message.name + " Msg ID: " + message.messageID + " Type: " + message.type + "<br>");
+    						     		});
+    						     	});
+    								$('.search-list').empty();
+    								$('.search-list').append("<input type='text' style='margin: 10 auto; width: 96%' data-provide='typeahead' data-items='8' data-source='[" + search_strings.toString()+ "]'>");
+    					});
+   					});
+  			 </script>
 		  
             </ul>
           </div><!--/.well -->
@@ -402,7 +359,7 @@ $(function () {
               <script>
               		$(document).ready(function(){
     				   $(".btn.JSON").click(function(event){
-    					   $.getJSON('AjaxTest',function(data){
+    					   $.getJSON('FetchCatalog',function(data){
     						  	 	$('.lulz').empty();
     						   	 	var sum = 0;
     						  	 	$.each(data, function(i, field){
@@ -457,6 +414,7 @@ $(function () {
 		  
           </div><!--/row-->
         </div><!--/span-->
+       <!-- </div> column-->
       </div><!--/row-->
 
       <hr>
@@ -467,11 +425,21 @@ $(function () {
 
     </div><!--/.fluid-container-->
 
+	<!-- Codes
+    ================================================== -->
+    <!-- I wrote a code -->
+	
+
+
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
     <script src="bootstrap/js/jquery.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="jquery-ui-personalized-1.6rc2.min.js"></script>
+    <script type="text/javascript" src="inettuts.js"></script>
+	
     
 
   </body>
